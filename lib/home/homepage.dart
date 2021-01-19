@@ -1,110 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:i_rich/home/event.dart';
+import 'package:i_rich/home/home.dart';
+import 'package:i_rich/home/note.dart';
 
-class HomePage extends StatefulWidget {
+class MyBottomNavigationBar extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _MyBottomNavigationBarState createState() => _MyBottomNavigationBarState();
 }
 
-class _HomePageState extends State<HomePage> {
-  int _selectedItem = 0;
+class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
+  int _currentIndex = 0;
+  final List<Widget> _children = [HomePage(), NotePage(), EventPage()];
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: CustomBottomNavigationBar(
-        iconList: [
-          Icons.home,
-          Icons.card_giftcard,
-          Icons.camera,
-          Icons.pie_chart,
-          Icons.person,
-        ],
-        onChange: (val) {
-          setState(() {
-            _selectedItem = val;
-          });
-        },
-        defaultSelectedIndex: 1,
-      ),
-      body: Center(
-        child: Text(
-          "Hello from Item $_selectedItem",
-          style: TextStyle(fontSize: 26),
-        ),
-      ),
-    );
-  }
-}
-
-class CustomBottomNavigationBar extends StatefulWidget {
-  final int defaultSelectedIndex;
-  final Function(int) onChange;
-  final List<IconData> iconList;
-
-  CustomBottomNavigationBar(
-      {this.defaultSelectedIndex = 0,
-      @required this.iconList,
-      @required this.onChange});
-
-  @override
-  _CustomBottomNavigationBarState createState() =>
-      _CustomBottomNavigationBarState();
-}
-
-class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
-  int _selectedIndex = 0;
-  List<IconData> _iconList = [];
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    _selectedIndex = widget.defaultSelectedIndex;
-    _iconList = widget.iconList;
+  void onTappedBar(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> _navBarItemList = [];
-
-    for (var i = 0; i < _iconList.length; i++) {
-      _navBarItemList.add(buildNavBarItem(_iconList[i], i));
-    }
-
-    return Row(
-      children: _navBarItemList,
-    );
-  }
-
-  Widget buildNavBarItem(IconData icon, int index) {
-    return GestureDetector(
-      onTap: () {
-        widget.onChange(index);
-        setState(() {
-          _selectedIndex = index;
-        });
-      },
-      child: Container(
-        height: 60,
-        width: MediaQuery.of(context).size.width / _iconList.length,
-        decoration: index == _selectedIndex
-            ? BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(width: 4, color: Colors.green),
-                ),
-                gradient: LinearGradient(colors: [
-                  Colors.green.withOpacity(0.3),
-                  Colors.green.withOpacity(0.015),
-                ], begin: Alignment.bottomCenter, end: Alignment.topCenter)
-                // color: index == _selectedItemIndex ? Colors.green : Colors.white,
-                )
-            : BoxDecoration(),
-        child: Icon(
-          icon,
-          color: index == _selectedIndex ? Colors.black : Colors.grey,
-        ),
-      ),
-    );
+    return new Scaffold(
+        body: _children[_currentIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: onTappedBar,
+          currentIndex: _currentIndex,
+          items: [
+            BottomNavigationBarItem(
+                icon: new Icon(Icons.home),
+                // ignore: deprecated_member_use
+                title: new Text("Home")),
+            BottomNavigationBarItem(
+                icon: new Icon(Icons.note),
+                // ignore: deprecated_member_use
+                title: new Text("Note")),
+            BottomNavigationBarItem(
+                icon: new Icon(Icons.event_note_rounded),
+                // ignore: deprecated_member_use
+                title: new Text("Event")),
+          ],
+        ));
   }
 }
