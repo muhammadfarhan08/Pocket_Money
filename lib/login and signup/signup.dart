@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_login/flutter_login.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:i_rich/login and signup/login.dart';
 
 class SignUp extends StatefulWidget {
   @override

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:i_rich/home/account.dart';
 import 'package:i_rich/home/event.dart';
 import 'package:i_rich/home/home.dart';
 import 'package:i_rich/home/note.dart';
@@ -10,7 +11,12 @@ class MyBottomNavigationBar extends StatefulWidget {
 
 class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
   int _currentIndex = 0;
-  final List<Widget> _children = [HomePage(), NotePage(), EventPage()];
+  final List<Widget> _children = [
+    HomePage(),
+    NotePage(),
+    EventPage(),
+    AccountPage()
+  ];
 
   void onTappedBar(int index) {
     setState(() {
@@ -23,6 +29,9 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
     return new Scaffold(
         body: _children[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.amberAccent,
+          selectedItemColor: Colors.lightBlue.shade700,
+          unselectedItemColor: Colors.blueGrey,
           onTap: onTappedBar,
           currentIndex: _currentIndex,
           items: [
@@ -38,6 +47,10 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
                 icon: new Icon(Icons.event_note_rounded),
                 // ignore: deprecated_member_use
                 title: new Text("Event")),
+            BottomNavigationBarItem(
+                icon: new Icon(Icons.account_circle),
+                // ignore: deprecated_member_use
+                title: new Text("Account")),
           ],
         ));
   }

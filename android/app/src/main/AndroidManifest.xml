@@ -7,8 +7,8 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="iRich"
-        android:icon="@mipmap/logo">
+        android:label="MyPoni"
+        android:icon="@mipmap/unicorn">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
